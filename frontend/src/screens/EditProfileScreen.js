@@ -61,7 +61,7 @@ const EditProfileScreen = ({ navigation }) => {
           />
         </View>
 
-        <Text style={styles.label}>Username (Non-editable)</Text>
+        <Text style={styles.label}>Username</Text>
         <View style={[styles.inputContainer, styles.disabledInput]}>
           <Ionicons name="at-outline" size={20} color={colors.darkGray} style={styles.icon} />
           <TextInput
@@ -71,7 +71,7 @@ const EditProfileScreen = ({ navigation }) => {
           />
         </View>
 
-        <Text style={styles.label}>Email (Non-editable)</Text>
+        <Text style={styles.label}>Email</Text>
         <View style={[styles.inputContainer, styles.disabledInput]}>
           <Ionicons name="mail-outline" size={20} color={colors.darkGray} style={styles.icon} />
           <TextInput
@@ -94,7 +94,7 @@ const EditProfileScreen = ({ navigation }) => {
         <View style={styles.infoBox}>
           <Ionicons name="information-circle-outline" size={20} color={colors.text} />
           <Text style={styles.infoText}>
-            Only your full name can be edited. Username and email are permanent.
+            Only your full name can be edited.
           </Text>
         </View>
       </View>

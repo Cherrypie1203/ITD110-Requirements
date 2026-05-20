@@ -30,7 +30,8 @@ const messageSchema = new mongoose.Schema({
   },
   content: {
     type: String,
-    required: true
+    required: false,
+    default: ''
   },
   imageUrl: {
     type: String

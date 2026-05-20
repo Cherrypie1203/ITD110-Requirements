@@ -14,15 +14,25 @@ import { colors, spacing, borderRadius, fontSize, shadow } from '../utils/theme'
 const ProfileScreen = ({ navigation }) => {
   const { currentUser, logout } = useAuth();
 
+  if (!currentUser) {
+    return null;
+  }
+
   const handleLogout = () => {
-    Alert.alert(
-      'Sign Out',
-      'Are you sure you want to sign out?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Sign Out', onPress: logout, style: 'destructive' },
-      ]
-    );
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Sign Out',
+        style: 'destructive',
+        onPress: async () => {
+          await logout();
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Login' }],
+          });
+        },
+      },
+    ]);
   };
 
   return (
@@ -33,6 +43,26 @@ const ProfileScreen = ({ navigation }) => {
         </View>
         <Text style={styles.name}>{currentUser.fullName}</Text>
         <Text style={styles.username}>@{currentUser.username}</Text>
+      </View>
+
+      <View style={styles.section}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => navigation.navigate('EditProfile')}
+        >
+          <Ionicons name="create-outline" size={24} color={colors.primary} />
+          <Text style={styles.actionButtonText}>Edit Profile</Text>
+          <Ionicons name="chevron-forward" size={24} color={colors.darkGray} />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.actionButton, styles.logoutButton]}
+          onPress={handleLogout}
+        >
+          <Ionicons name="log-out-outline" size={24} color={colors.error} />
+          <Text style={[styles.actionButtonText, styles.logoutText]}>Sign Out</Text>
+          <Ionicons name="chevron-forward" size={24} color={colors.darkGray} />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.section}>
@@ -61,26 +91,6 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.infoValue}>{currentUser.email}</Text>
           </View>
         </View>
-      </View>
-
-      <View style={styles.section}>
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => navigation.navigate('EditProfile')}
-        >
-          <Ionicons name="create-outline" size={24} color={colors.primary} />
-          <Text style={styles.actionButtonText}>Edit Profile</Text>
-          <Ionicons name="chevron-forward" size={24} color={colors.darkGray} />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.actionButton, styles.logoutButton]}
-          onPress={handleLogout}
-        >
-          <Ionicons name="log-out-outline" size={24} color={colors.error} />
-          <Text style={[styles.actionButtonText, styles.logoutText]}>Sign Out</Text>
-          <Ionicons name="chevron-forward" size={24} color={colors.darkGray} />
-        </TouchableOpacity>
       </View>
 
       <View style={styles.footer}>

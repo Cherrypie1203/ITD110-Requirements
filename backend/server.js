@@ -49,10 +49,13 @@ io.on('connection', (socket) => {
     try {
       const { chatId, senderId, content, messageType, imageUrl, replyTo } = data;
 
+      // backend schema allows empty content (e.g., image-only messages)
+      const safeContent = content ?? '';
+
       const message = new Message({
         chatId,
         senderId,
-        content,
+        content: safeContent,
         messageType: messageType || 'text',
         imageUrl,
         replyTo
